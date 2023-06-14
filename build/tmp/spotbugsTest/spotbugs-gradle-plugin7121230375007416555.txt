@@ -1,0 +1,3 @@
+D:\software-test\build\classes\java\test\cn\edu\ctgu\BillingTest.class
+D:\software-test\build\classes\java\test\cn\edu\ctgu\TriangleByParameterizeTest.class
+D:\software-test\build\classes\java\test\cn\edu\ctgu\TriangleTest.class

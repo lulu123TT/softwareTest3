@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Billing.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JunitTest</a> &gt; <a href="index.source.html" class="el_package">cn.edu.ctgu</a> &gt; <span class="el_source">Billing.java</span></div><h1>Billing.java</h1><pre class="source lang-java linenums">package cn.edu.ctgu;
+
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
+public class Billing {
+
+    private final ZoneId timeZone;
+
+<span class="fc" id="L14">    public Billing(final ZoneId timeZone) {</span>
+<span class="fc" id="L15">        this.timeZone = timeZone;</span>
+<span class="fc" id="L16">    }</span>
+
+    public double calculateFee(final LocalDateTime startTime, final LocalDateTime endTime) {
+<span class="fc" id="L19">        long timeLength = calculateTimeSpan(startTime, endTime);</span>
+<span class="fc" id="L20">        double fee = 0;</span>
+<span class="fc" id="L21">        final int num = 20;</span>
+<span class="fc" id="L22">        final double fee1 = 0.05;</span>
+<span class="fc" id="L23">        final double fee2 = 0.1;</span>
+
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (timeLength &lt;= 0) {</span>
+<span class="fc" id="L26">            return fee;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        } else if (timeLength &lt;= num) {</span>
+<span class="fc" id="L28">            fee = timeLength * fee1;</span>
+        } else {
+<span class="fc" id="L30">            fee = (timeLength - num) * fee2 + 2;</span>
+        }
+
+<span class="fc" id="L33">        return fee;</span>
+    }
+
+    public long calculateTimeSpan(final LocalDateTime startTime, final LocalDateTime endTime) {
+        //璁＄畻鏃堕棿宸�
+        //褰撳湪澶忎护鏃舵椂锛屾椂闂村樊浼氬1灏忔椂锛岄渶瑕佸噺鍘�1灏忔椂
+<span class="fc" id="L39">        final int num = 60;</span>
+<span class="fc" id="L40">        ZonedDateTime start = ZonedDateTime.of(startTime, timeZone);</span>
+<span class="fc" id="L41">        ZonedDateTime end = ZonedDateTime.of(endTime, timeZone);</span>
+<span class="fc" id="L42">        Duration duration = Duration.between(start, end);</span>
+<span class="fc" id="L43">        long timeLength = duration.toMinutes();</span>
+<span class="fc bfc" id="L44" title="All 4 branches covered.">        if (isDuringDST(start) &amp;&amp; !isDuringDST(end)) {</span>
+<span class="fc" id="L45">            timeLength -= num;</span>
+        }
+        //褰撳浠ゆ椂缁撴潫鏃讹紝鏃堕棿宸細灏�1灏忔椂锛岄渶瑕佸姞涓�1灏忔椂
+<span class="pc bpc" id="L48" title="1 of 4 branches missed.">        if (!isDuringDST(start) &amp;&amp; isDuringDST(end)) {</span>
+<span class="nc" id="L49">            timeLength += num;</span>
+        }
+<span class="fc" id="L51">        return timeLength;</span>
+    }
+
+    private boolean isDuringDST(final ZonedDateTime dateTime) {
+<span class="fc" id="L55">        final int month1 = 3;</span>
+<span class="fc" id="L56">        final int month2 = 11;</span>
+<span class="fc" id="L57">        TemporalAdjuster secondSunday = TemporalAdjusters.dayOfWeekInMonth(2, DayOfWeek.SUNDAY);</span>
+<span class="fc" id="L58">        LocalDateTime start = LocalDateTime.of(dateTime.getYear(), month1, 1, 2, 0, 0).with(secondSunday);</span>
+<span class="fc" id="L59">        TemporalAdjuster firstSunday = TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY);</span>
+<span class="fc" id="L60">        LocalDateTime end = LocalDateTime.of(dateTime.getYear(), month2, 1, 2, 0, 0).with(firstSunday);</span>
+
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        return dateTime.isAfter(</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">                ZonedDateTime.of(start, timeZone)) &amp;&amp; dateTime.isBefore(ZonedDateTime.of(end, timeZone));</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

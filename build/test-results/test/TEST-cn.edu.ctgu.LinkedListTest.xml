@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cn.edu.ctgu.LinkedListTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-04-13T15:09:22" hostname="LAPTOP-CAPCM030" time="0.061">
+  <properties/>
+  <testcase name="testRemoveExistingNullElement()" classname="cn.edu.ctgu.LinkedListTest" time="0.054"/>
+  <testcase name="testRemoveExistingElement()" classname="cn.edu.ctgu.LinkedListTest" time="0.0"/>
+  <testcase name="testRemoveDuplicateElement()" classname="cn.edu.ctgu.LinkedListTest" time="0.002"/>
+  <testcase name="testRemoveEmptyList()" classname="cn.edu.ctgu.LinkedListTest" time="0.001"/>
+  <testcase name="testRemoveNonExistingElement()" classname="cn.edu.ctgu.LinkedListTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
